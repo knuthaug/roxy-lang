@@ -22,7 +22,7 @@ public abstract class ExpressionNode {
      */
 
     public long executeLong(VirtualFrame frame) throws UnexpectedResultException {
-        return SLTypesGen.expectLong(executeGeneric(frame));
+        return 1L;
     }
 
 }

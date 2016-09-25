@@ -1,4 +1,4 @@
-// Generated from src/main/antlr4/roxy/antlr/Roxy.g4 by ANTLR 4.5.3
+// Generated from /Users/knuthaug/src/m/roxy-lang/src/main/antlr4/roxy/antlr/Roxy.g4 by ANTLR 4.5.3
 package roxy.antlr;
 
 import org.antlr.v4.runtime.ParserRuleContext;

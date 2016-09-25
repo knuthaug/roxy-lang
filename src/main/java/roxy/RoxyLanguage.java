@@ -92,7 +92,7 @@ public final class RoxyLanguage extends TruffleLanguage<RoxyContext> {
     @Override
     protected Object getLanguageGlobal(RoxyContext context) {
         /*
-         * The context itself is the global function registry. SL does not have global variables.
+         * The context itself is the global function registry. Roxy does not have global variables.
          */
         return context;
     }
@@ -104,7 +104,7 @@ public final class RoxyLanguage extends TruffleLanguage<RoxyContext> {
 
     @Override
     protected Object evalInContext(Source source, Node node, MaterializedFrame mFrame) throws IOException {
-        throw new IllegalStateException("evalInContext not supported in SL");
+        throw new IllegalStateException("evalInContext not supported in Roxy");
     }
 
     public RoxyContext findContext() {

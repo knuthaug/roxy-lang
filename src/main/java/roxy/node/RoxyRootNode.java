@@ -39,7 +39,7 @@ public class RoxyRootNode extends RootNode {
 
     @Override
     public Object execute(VirtualFrame frame) {
-        //assert RoxyLanguage.INSTANCE.findContext() != null;
+        assert RoxyLanguage.INSTANCE.findContext() != null;
         try {
             return bodyNode.executeGeneric(frame);
         } catch (UnexpectedResultException e) {

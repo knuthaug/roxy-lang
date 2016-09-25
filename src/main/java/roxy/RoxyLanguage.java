@@ -107,6 +107,10 @@ public final class RoxyLanguage extends TruffleLanguage<RoxyContext> {
         throw new IllegalStateException("evalInContext not supported in SL");
     }
 
+    public RoxyContext findContext() {
+        return super.findContext(super.createFindContextNode());
+    }
+
     @Override
     protected String toString(RoxyContext context, Object value) {
         if (value == RoxyNull.SINGLETON) {

@@ -17,6 +17,7 @@ import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
 import org.antlr.runtime.ANTLRInputStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
+import roxy.antlr.RoxyBaseListener;
 import roxy.antlr.RoxyLexer;
 import roxy.antlr.RoxyListener;
 import roxy.antlr.RoxyParser;
@@ -69,10 +70,10 @@ public final class RoxyLanguage extends TruffleLanguage<RoxyContext> {
         RoxyParser.ProgContext context = parser.prog();
 
         ParseTreeWalker walker = new ParseTreeWalker();
-        RoxyListener listener = new RoxyListener();
+        RoxyListener listener = new RoxyBaseListener();
         walker.walk(listener, context);
 
-        return listener.;
+        return listener.getExpression();
 
     }
 

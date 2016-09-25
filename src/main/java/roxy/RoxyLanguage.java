@@ -1,7 +1,6 @@
 package roxy;
 
 import com.oracle.truffle.api.CallTarget;
-import com.oracle.truffle.api.CompilerAsserts;
 import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.TruffleLanguage;
 import com.oracle.truffle.api.debug.DebuggerTags;
@@ -9,24 +8,20 @@ import com.oracle.truffle.api.frame.MaterializedFrame;
 import com.oracle.truffle.api.instrumentation.ProvidedTags;
 import com.oracle.truffle.api.instrumentation.StandardTags;
 import com.oracle.truffle.api.nodes.Node;
-import com.oracle.truffle.api.object.ObjectLocation;
 import com.oracle.truffle.api.source.Source;
 
-import com.sun.org.apache.xpath.internal.ExpressionNode;
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils;
-import org.antlr.runtime.ANTLRInputStream;
-import org.antlr.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.ANTLRInputStream;
+import org.antlr.v4.runtime.CommonTokenStream;
+import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.tree.ParseTreeWalker;
 import roxy.antlr.RoxyBaseListener;
 import roxy.antlr.RoxyLexer;
 import roxy.antlr.RoxyListener;
 import roxy.antlr.RoxyParser;
+import roxy.node.ExpressionNode;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.util.Map;
+
 
 
 /**
@@ -57,12 +52,12 @@ public final class RoxyLanguage extends TruffleLanguage<RoxyContext> {
     @Override
     protected CallTarget parse(Source source, Node node, String... argumentNames) throws IOException {
         ExpressionNode body = RoxyLanguage.parseSource(source);
-        RoxyRootNode root = new RoxyRootNode(null, body), null, "[no-main]");
+        RoxyRootNode root = new RoxyRootNode(null, body, null, "[no-main]");
         return Truffle.getRuntime().createCallTarget(root);
     }
 
     private static ExpressionNode parseSource(Source source) throws IOException {
-        ANTLRInputStream input = new ANTLRInputStream(source.getInputStream());
+        CharStream input = new ANTLRInputStream(source.getInputStream());
         RoxyLexer lexer = new RoxyLexer(input);
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         RoxyParser parser = new RoxyParser(tokens);
@@ -73,7 +68,7 @@ public final class RoxyLanguage extends TruffleLanguage<RoxyContext> {
         RoxyListener listener = new RoxyBaseListener();
         walker.walk(listener, context);
 
-        return listener.getExpression();
+        return listener.
 
     }
 

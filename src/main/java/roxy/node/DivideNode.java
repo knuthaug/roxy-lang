@@ -31,10 +31,4 @@ public class DivideNode extends BinaryNode {
         return left.divide(right);
     }
 
-    @Override
-    @Specialization
-    @CompilerDirectives.TruffleBoundary
-    public Object executeGeneric(VirtualFrame frame) throws UnexpectedResultException {
-        return
-    }
 }

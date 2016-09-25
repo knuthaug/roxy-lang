@@ -5,9 +5,11 @@ import com.oracle.truffle.api.Truffle;
 import com.oracle.truffle.api.TruffleLanguage;
 import com.oracle.truffle.api.debug.DebuggerTags;
 import com.oracle.truffle.api.frame.MaterializedFrame;
+import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.instrumentation.ProvidedTags;
 import com.oracle.truffle.api.instrumentation.StandardTags;
 import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.nodes.UnexpectedResultException;
 import com.oracle.truffle.api.source.Source;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
@@ -19,9 +21,12 @@ import roxy.antlr.RoxyLexer;
 import roxy.antlr.RoxyListener;
 import roxy.antlr.RoxyParser;
 import roxy.node.ExpressionNode;
+import roxy.node.RoxyRootNode;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 
 /**
@@ -46,7 +51,9 @@ public final class RoxyLanguage extends TruffleLanguage<RoxyContext> {
 
     @Override
     protected RoxyContext createContext(Env env) {
-        return new RoxyContext();
+        BufferedReader in = new BufferedReader(new InputStreamReader(env.in()));
+        PrintWriter out = new PrintWriter(env.out(), true);
+        return new RoxyContext(env, in, out);
     }
 
     @Override
@@ -68,8 +75,13 @@ public final class RoxyLanguage extends TruffleLanguage<RoxyContext> {
         RoxyListener listener = new RoxyBaseListener();
         walker.walk(listener, context);
 
-        return listener.
-
+        //return listener.getExpression();
+        return new ExpressionNode() {
+            @Override
+            public Object executeGeneric(VirtualFrame frame) throws UnexpectedResultException {
+                return null;
+            }
+        };
     }
 
     @Override
@@ -105,6 +117,5 @@ public final class RoxyLanguage extends TruffleLanguage<RoxyContext> {
         }
         return super.toString(context, value);
     }
-
 
 }
